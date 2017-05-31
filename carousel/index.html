@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type="text/javascript"  src="js/sport.js"></script>
+<script>
+window.onload=function()
+{
+	var oBox=document.getElementById('box');
+	var oUl=oBox.getElementsByTagName('ul')[0];
+	var aImg=oBox.getElementsByTagName('img');
+	var oBtn=document.getElementById('btn');
+	var aDiv = oBtn.getElementsByTagName('div');
+	var upBtn = document.getElementById('upbtn');
+	var downBtn = document.getElementById('downbtn');
+	
+	//实现点击之后跳转到指定图片
+	
+	for(var i =0 ;i < aDiv.length;i++)
+	{
+		aDiv[i].index=i;
+		aDiv[i].onclick=function()
+		{
+			for(var i =0; i < aDiv.length;i++)
+			{
+				aDiv[i].className='';	
+			}
+			aDiv[this.index].className='active';
+			count=m=n=this.index;
+			sport(oUl,'top',(-this.index*cssStyle(aImg[0],'height')));
+				
+		}	
+	}
+	//实现点击向上按钮实现图片跳转到上一个，鼠标放在按钮上透明度发生变化
+	upBtn.onmouseover=function()
+	{
+		sport(upBtn,'opacity',100);	
+	};
+	upBtn.onmouseout=function()
+	{
+		sport(upBtn,'opacity',20);	
+	};
+	upBtn.onclick=function()
+	{
+		if(n==0||n==3)
+		{
+			sport(oUl,'top',(-n*cssStyle(aImg[0],'height')));	
+		}else
+		{
+			sport(oUl,'top',(-(n+1)*cssStyle(aImg[0],'height')));
+			n++;
+		}
+		
+		count=m=n;
+	};
+	//实现点击向下按钮实现图片跳转到下一个,鼠标放在按钮上透明度发生变化
+	downBtn.onmouseover=function()
+	{
+		sport(downBtn,'opacity',100);	
+	};
+	downBtn.onmouseout=function()
+	{
+		sport(downBtn,'opacity',20);	
+	};
+	downBtn.onclick=function()
+	{
+		if(n==0||n==3)
+		{
+			sport(oUl,'top',(-n*cssStyle(aImg[0],'height')));	
+		}else
+		{
+			sport(oUl,'top',(-(n-1)*cssStyle(aImg[0],'height')));
+			n--;
+	
+		}
+		count=m=n;		
+	};
+ 
+	cssStyle(oUl,'height',cssStyle(aImg[0],'height')*aImg.length);
+	var timer = null;
+	var count = 0;
+	var m = 4;
+	//定时器
+	timer=setInterval(function()
+	{
+		if(count<aImg.length)
+		{
+			for(var i =0; i < aDiv.length;i++)
+			{
+				aDiv[i].className='';	
+			}
+			aDiv[count].className='active';
+			sport(oUl,'top',(-count*cssStyle(aImg[0],'height')));	
+			n=count++;
+			if(aDiv[i].onclick==true){
+				m++;
+			}
+	
+		}else
+		{
+			if(m>0)
+			{
+				n=m--;
+				for(var i =0; i < aDiv.length;i++)
+				{
+					aDiv[i].className='';	
+				}
+				aDiv[m].className='active';
+				sport(oUl,'top',(-m*cssStyle(aImg[0],'height')));	
+			}else
+			{
+				count=0;
+				m=4;	
+			}	
+		}
+	},2000);
+}
+</script>
+<style>
+*{
+	margin:0;
+	padding:0;
+	border:0;}
+#box{
+	width:500px;
+	height:300px;
+	position:relative;
+	margin:100px auto;
+	overflow:hidden;
+	}
+#box ul{
+	width:500px;
+	height:300px;
+	list-style:none;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:1;
+	}
+#box ul li{
+	width:500px;
+	height:300px;
+	margin:0;
+	padding:0;}
+#box img{
+	width:500px;
+	height:300px;
+	}
+#btn{
+	width:100px;
+	height:200px;
+	position:absolute;
+	top:100px;
+	left:0;
+	z-index:2;}
+#btn div{
+	width:20px;
+	height:20px;
+	text-align:center;
+	margin-top:10px;
+	border-radius:20px;
+	background:#999;
+	}
+#btn .active{
+	background:#00F;}
+#downbtn{
+	width:59px;
+	height:30px;
+	position:absolute;
+	left:660px;
+	bottom:250px;
+	z-index:2;
+	opacity:0.2;}
+#upbtn{
+	width:59px;
+	height:30px;
+	position:absolute;
+	left:660px;
+	top:120px;
+	z-index:2;
+	opacity:0.3;}
+</style>
+
+</head>
+
+<body>
+<div id="box">
+	<ul>
+    	<li><img src="images/02.jpg"></li>
+        <li><img src="images/04.jpg"></li>
+        <li><img src="images/05.jpg"></li>
+        <li><img src="images/06.jpg"></li>
+    </ul>
+    <div id="btn">
+    	<div class="active">1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+    </div>
+</div>
+<div id="downbtn"><img src="images/next.png"></div>
+<div id="upbtn"><img src="images/prev.png"></div>
+</body>
+</html>
